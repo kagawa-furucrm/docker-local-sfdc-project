@@ -1,0 +1,2 @@
+# prototyping-sfdc-app-sample
+DockerでSalesforceアプリケーションの開発環境を整いつつ、ローカルで高速開発をめざす
