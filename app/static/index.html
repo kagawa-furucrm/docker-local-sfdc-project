@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>sample salesforce app</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="./lib/angular/angular.min.js"></script>
+    <script src="./lib/jsforce/build/jsforce.min.js"></script>
+    <script src="./js/jsforce.config.js"></script>
+</head>
+
+<body ng-app="sampleApp" ng-controller="mainController as mainCtrl">
+    <h1>sample salesforce app</h1>
+    <ul>
+        <li ng-repeat="row in mainCtrl.records">
+            {{row.Name}}
+        </li>
+    </ul>
+</body>
+
+<script>
+    let app = angular.module('sampleApp', []);
+    app.controller('mainController', ['$scope', function($scope) {
+        let ctrl = this;
+        ctrl.records = [];
+
+        jsforce.browser.on('connect', function() {
+            console.log('connected sfdc by jsforce.');
+            jsfConn.query('Select Id, Name From Lead').then(function(result) {
+                if (result) {
+                    ctrl.records = result.records;
+                    $scope.$apply();
+                }
+            });
+        });
+    }]);
+</script>
+
+</html>

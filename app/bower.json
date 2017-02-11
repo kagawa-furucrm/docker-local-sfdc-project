@@ -1,0 +1,26 @@
+{
+  "name": "salesforce app",
+  "description": "development salesforce app on localhost",
+  "main": "index.html",
+  "authors": [
+    "comefigo"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "salesforce",
+    "spa",
+    "jsforce"
+  ],
+  "homepage": "https://github.com/comefigo/local-prototyping-sfdc-app-sample",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "static/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jsforce": "^1.7.1",
+    "angular": "angularjs#^1.6.2"
+  }
+}
