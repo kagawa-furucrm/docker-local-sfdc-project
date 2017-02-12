@@ -16,3 +16,5 @@ services:
     container_name: app
     depends_on:
       -  proxy
+    environment:
+      - PORT=3000
