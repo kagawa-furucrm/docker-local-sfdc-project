@@ -10,11 +10,11 @@ services:
     build: ./app
     image: app
     ports:
-      - "3000:3000"
+      - "8082:8082"
     volumes:
       - "./app/static:/usr/src/app/static"
     container_name: app
     depends_on:
       -  proxy
     environment:
-      - PORT=3000
+      - PORT=8082

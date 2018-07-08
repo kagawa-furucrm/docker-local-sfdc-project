@@ -11,24 +11,35 @@
     <script src="./js/jsforce.config.js"></script>
 </head>
 
-<body ng-app="sampleApp" ng-controller="mainController as mainCtrl">
-    <h1>sample salesforce app</h1>
-    <ul>
-        <li ng-repeat="row in mainCtrl.records">
-            {{row.Name}}
-        </li>
-    </ul>
+<body ng-app="localApp" ng-controller="appController as appCtrl">
+    <h1>local sample salesforce app</h1>
+   <table class="table">
+  	<thead>
+    		<tr>
+			<th>Account</th>
+			<th>BillingAddress</th>
+			<th>ShippingAddress</th>
+		</tr>
+  	</thead>
+  	<tbody>
+    		<tr ng-repeat="row in appCtrl.records">
+      			<td>{{row.Name}}</td>
+      			<td>{{row.BillingAddress}}</td>
+                        <td>{{row.ShippingAddress}}
+    		</tr>
+  	</tbody>
+	</table>	
 </body>
 
 <script>
-    let app = angular.module('sampleApp', []);
-    app.controller('mainController', ['$scope', function($scope) {
+    let app = angular.module('localApp', []);
+    app.controller('appController', ['$scope', function($scope) {
         let ctrl = this;
         ctrl.records = [];
 
         jsforce.browser.on('connect', function() {
-            console.log('connected sfdc by jsforce.');
-            jsfConn.query('Select Id, Name From Lead').then(function(result) {
+            console.log('connect to sfdc by jsforce');
+            jsfConn.query('Select Id, Name,BillingAddress,ShippingAddress  From Account Limit 10').then(function(result) {
                 if (result) {
                     ctrl.records = result.records;
                     $scope.$apply();

@@ -1,83 +1,75 @@
-# prototyping-sfdc-app-sample
+# sfdc-sfa-app-prototype
 
-# 概要
+# Summary
 
-ローカル環境でJsforceを通じてSalesforce APIを利用しながら、SPAなアプリケーションを開発する
-ローカル環境で開発する際に必要なプロキシサーバをDockerで一元管理することで、
-初心者でも簡単にローカルでの開発環境を構築することができると思います。
-（Dockerのインストールと起動だけを意識して頂ければ・・・）
+In many cases your clients want to you present your prototype on sfdc platform 
+before go close deal or go next phase. But your front-end engineer has not experienced in
+developing SPA on salesforce and familiar with vf and apex code. 
+So we need to create local and might share this app enviroment to team-coworker
+In this sample we user Jsforce to connect to Salesforce to get Account data
 
-# 準備
+
+# Prepare
 
 ## Docker
 
-1. [Docker](https://www.docker.com/products/docker)をインストール
-2. ドライブの共有設定  
-   開発ソースが保存されているドライブの共有設定を有効に設定
+1. Install [Docker](https://www.docker.com/products/docker)
+2. Share your application's folder 
 
-![1.png](https://qiita-image-store.s3.amazonaws.com/0/30522/23749159-9dbf-18db-6088-85e51bb39d92.png)
+## SFDC OAuth Setting
 
+### 1. Create Connected App
 
-## OAuth設定
+### 2. Setting OAuth
 
-ローカルの開発環境からSFDCに認証するために、SFDCのOAuth設定をします
-設定が反映させるまで最大10分かかります
+- Callback url（default: http://localhost:3000/）
+you can change port in jsforce.config.js,docker-compose.yml
+- OAuth scope:  only allow access api for access data
+- Web application start url （default http://localhost:3000/）
 
-### 1. 新規接続アプリケーションの作成
-![0.png](https://qiita-image-store.s3.amazonaws.com/0/30522/d8521fb5-69a8-fcc5-8ec6-e21d36862c21.png)
+### 3. Usage of Connected App's consumer key
 
-### 2. OAuth設定
+copy your consumer key and paster into this file app/static/js/jsforce.config.js
+ as following 
 
-- コールバックURLはローカル環境のWebサーバのURLを指定してください（デフォルトはhttp://localhost:3000/）
-- OAuth範囲は「データへのアクセスと管理」
-- Webアプリケーション設定の開始URL（デフォルトはhttp://localhost:3000/）
-![1.png](https://qiita-image-store.s3.amazonaws.com/0/30522/b3524c68-d199-7936-7e12-63f63b3158a8.png)
-
-### 3. 認証情報の保存
-
-「app」-「static」-「js」-「jsforce.config.js」に手順2で保存後に表示されるコンシューマー鍵をclientIdに上書きしてください
-
-```
 if (!jsfConn) {
     jsforce.browser.init({
-        clientId: 'salesforce コンシューマ鍵',
+        clientId: 'salesforce's connected app cosumer key',
         redirectUri: 'http://localhost:3000/',
         proxyUrl: 'http://localhost:3123/proxy/'
     });
     var jsfConn = jsforce.browser.connection;
 
-    // アクセストークンがない場合は、認証
+    // In case of can not get Access token redirect to login  
     if (!jsfConn.accessToken) {
         jsforce.browser.login();
     }
 }
 ```
 
-## プロキシサーバとWebサーバの起動
-
-ルートディレクトリで以下のコマンドを実行
+## Start app and proxy server
 
 ```
 > docker-compose up -d
 ```
 
-これだけです！
-これで開発用のプロキシーサーバとWebサーバが起動します！
+## App folder's public resources
 
-## アプリケーションの開発
+app/static
 
-「app」-「static」配下がWebアプリケーションの公開ディレクトリになります
-
-## サンプルコードを動かすには
-
-appフォルダ配下で以下のコマンドを実行
+## Launch sample code
 
 ```
 bower install
 ```
 
-# 参考にしたサイト
+Run http://localhost:3000/
 
+
+
+# Reference Site
+
+- [docker-sfdc](https://qiita.com/comefigo/items/d819f8bb36d3b404204a)
 - [jsforce](https://jsforce.github.io/)
 - [jsforce ajax proxy](https://github.com/jsforce/jsforce-ajax-proxy)
 - [tyoshikawa1106のブログ](http://tyoshikawa1106.hatenablog.com/entry/2016/03/17/011316)

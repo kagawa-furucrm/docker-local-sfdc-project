@@ -1,12 +1,14 @@
 if (!jsfConn) {
     jsforce.browser.init({
-        clientId: 'salesforce コンシューマ鍵',
-        redirectUri: 'http://localhost:3000/',
+	loginUrl : 'https://login.salesforce.com',
+	//input your connected app's consumer key here
+        clientId: 'Add connected app's consumerkey here',
+        redirectUri: 'http://localhost:8082/',
         proxyUrl: 'http://localhost:3123/proxy/'
     });
     var jsfConn = jsforce.browser.connection;
 
-    // アクセストークンがない場合は、認証
+    // Redirected to login page if there is not accessToken
     if (!jsfConn.accessToken) {
         jsforce.browser.login();
     }
