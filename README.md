@@ -70,6 +70,3 @@ Run http://localhost:3000/
 # Reference Site
 
 - [docker-sfdc](https://qiita.com/comefigo/items/d819f8bb36d3b404204a)
-- [jsforce](https://jsforce.github.io/)
-- [jsforce ajax proxy](https://github.com/jsforce/jsforce-ajax-proxy)
-- [tyoshikawa1106のブログ](http://tyoshikawa1106.hatenablog.com/entry/2016/03/17/011316)
